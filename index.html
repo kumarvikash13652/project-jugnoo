@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Jugnoo Bihar | Firefly Conservation Movement</title>
+    <meta name="description" content="Project Jugnoo Bihar - Bring Back The Magic Of Fireflies. A community-led initiative to protect fireflies and their habitats in Bihar.">
+    <meta name="keywords" content="Project Jugnoo, Project Jugnoo Bihar, Save Fireflies Bihar, Firefly Conservation India, Jugnoo Saharsa Purnea">
+    <meta name="author" content="Project Jugnoo Bihar">
+    <meta name="robots" content="index, follow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a1118;
+            --bg-card: #121e2b;
+            --primary-glow: #ffd700;
+            --secondary-glow: #76ff03;
+            --text-light: #f0f4f8;
+            --text-muted: #94a3b8;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle at 50% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 60%);
+        }
+
+        header {
+            background: rgba(10, 17, 24, 0.85);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: radial-gradient(circle, var(--primary-glow) 20%, var(--secondary-glow) 80%);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .logo text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--primary-glow);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Language Toggle Button */
+        .lang-btn {
+            background: transparent;
+            color: var(--primary-glow);
+            border: 1px solid var(--primary-glow);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: var(--primary-glow);
+            color: #000;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, var(--primary-glow), #ffab00);
+            color: #000;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.3s;
+            display: inline-block;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 1;
+            padding: 90px 6% 60px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary-glow);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+        }
+
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-glow);
+            color: var(--primary-glow);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--secondary-glow);
+        }
+
+        .stat-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Sections */
+        .section {
+            position: relative;
+            z-index: 1;
+            padding: 70px 6%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--text-light);
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-glow);
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Form / Crowdsourced Section */
+        .form-container {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
+        }
+
+        .form-container h2 {
+            color: var(--primary-glow);
+            margin-bottom: 15px;
+        }
+
+        .form-container p {
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 25px;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: #05090d;
+            padding: 40px 6%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <text>Project <span>Jugnoo</span></text>
+        </div>
+        <div class="header-actions">
+            <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">हिंदी</button>
+            <a href="#report" class="btn-glow" id="navReportBtn">Report Sighting</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <span class="badge" id="heroBadge">🌿 Bihar's First Firefly Conservation Movement</span>
+        <h1 id="heroTitle">Bring Back The Glow Of Fireflies ✨</h1>
+        <p id="heroDesc">Do you remember when fireflies illuminated our courtyards and fields at night? Due to light pollution and chemical pesticides, these glowing fireflies are disappearing. Let's unite to protect them!</p>
+        <div class="hero-btns">
+            <a href="#report" class="btn-glow" id="heroReportBtn">📍 Report Firefly Location</a>
+            <a href="#action" class="btn-outline" id="heroJoinBtn">🌱 Join As Volunteer</a>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <h3>Zero</h3>
+            <p id="stat1">Chemicals In Safe Zones</p>
+        </div>
+        <div class="stat-item">
+            <h3>100%</h3>
+            <p id="stat2">Volunteer Driven</p>
+        </div>
+        <div class="stat-item">
+            <h3>Bihar</h3>
+            <p id="stat3">Community Conservation</p>
+        </div>
+    </div>
+
+    <section class="section" id="about">
+        <div class="section-title">
+            <h2 id="missionTitle">Our Mission</h2>
+            <p id="missionSub">Protecting firefly habitats across every village and town in Bihar</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <span class="card-icon">💡</span>
+                <h3 id="mCard1Title">Light Pollution Control</h3>
+                <p id="mCard1Desc">Encouraging people to turn off unnecessary outdoor lights at night to help fireflies mate and glow freely.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🌾</span>
+                <h3 id="mCard2Title">Pesticide-Free Strips</h3>
+                <p id="mCard2Desc">Encouraging farmers to keep small unsprayed boundary strips along fields to keep larvae safe.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🏫</span>
+                <h3 id="mCard3Title">School Awareness</h3>
+                <p id="mCard3Desc">Educating children and youth about environmental protection and local biodiversity.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="report">
+        <div class="form-container">
+            <h2 id="formTitle">✨ When Did You Last See A Firefly?</h2>
+            <p id="formDesc">If you have spotted fireflies anywhere in Bihar, share the details by clicking the button below. This helps us create Bihar's official **Firefly Map**!</p>
+            <a href="https://forms.google.com" target="_blank" class="btn-glow" id="formBtn">📝 Submit Sighting Details</a>
+        </div>
+    </section>
+
+    <section class="section" id="action">
+        <div class="section-title">
+            <h2 id="actionTitle">How You Can Help</h2>
+            <p id="actionSub">Join us online from home or on the ground</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <span class="card-icon">📱</span>
+                <h3 id="aCard1Title">Digital Volunteer</h3>
+                <p id="aCard1Desc">Share our social media content from Gurugram, Patna, or anywhere to raise awareness.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🚶‍♂️</span>
+                <h3 id="aCard2Title">Ground Volunteer</h3>
+                <p id="aCard2Desc">Support us physically during monthly drives, school sessions, and farmer meets in Bihar.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p id="footer1">&copy; 2026 Project Jugnoo Bihar. A Non-Profit Community Initiative.</p>
+        <p style="margin-top: 8px;" id="footer2">Made with ❤️ for Bihar's Environment & Nature Conservation.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                langBtn: "हिंदी",
+                navReportBtn: "Report Sighting",
+                heroBadge: "🌿 Bihar's First Firefly Conservation Movement",
+                heroTitle: "Bring Back The Glow Of Fireflies ✨",
+                heroDesc: "Do you remember when fireflies illuminated our courtyards and fields at night? Due to light pollution and chemical pesticides, these glowing fireflies are disappearing. Let's unite to protect them!",
+                heroReportBtn: "📍 Report Firefly Location",
+                heroJoinBtn: "🌱 Join As Volunteer",
+                stat1: "Chemicals In Safe Zones",
+                stat2: "Volunteer Driven",
+                stat3: "Community Conservation",
+                missionTitle: "Our Mission",
+                missionSub: "Protecting firefly habitats across every village and town in Bihar",
+                mCard1Title: "Light Pollution Control",
+                mCard1Desc: "Encouraging people to turn off unnecessary outdoor lights at night to help fireflies mate and glow freely.",
+                mCard2Title: "Pesticide-Free Strips",
+                mCard2Desc: "Encouraging farmers to keep small unsprayed boundary strips along fields to keep larvae safe.",
+                mCard3Title: "School Awareness",
+                mCard3Desc: "Educating children and youth about environmental protection and local biodiversity.",
+                formTitle: "✨ When Did You Last See A Firefly?",
+                formDesc: "If you have spotted fireflies anywhere in Bihar, share the details by clicking the button below. This helps us create Bihar's official Firefly Map!",
+                formBtn: "📝 Submit Sighting Details",
+                actionTitle: "How You Can Help",
+                actionSub: "Join us online from home or on the ground",
+                aCard1Title: "Digital Volunteer",
+                aCard1Desc: "Share our social media content from Gurugram, Patna, or anywhere to raise awareness.",
+                aCard2Title: "Ground Volunteer",
+                aCard2Desc: "Support us physically during monthly drives, school sessions, and farmer meets in Bihar.",
+                footer1: "© 2026 Project Jugnoo Bihar. A Non-Profit Community Initiative.",
+                footer2: "Made with ❤️ for Bihar's Environment & Nature Conservation."
+            },
+            hi: {
+                langBtn: "English",
+                navReportBtn: "रिपोर्ट करें",
+                heroBadge: "🌿 बिहार का पहला जुगनू संरक्षण अभियान",
+                heroTitle: "लाओ फिर से जुगनू का उजाला ✨",
+                heroDesc: "क्या आपको याद है जब हमारे गाँव और आँगन में रात को जुगनू चमकते थे? लाइट पोल्यूशन और केमिकल पेस्टिसाइड्स के कारण ये चमकते हुए जुगनू गायब हो रहे हैं। आइए मिलकर इनको बचाएं!",
+                heroReportBtn: "📍 जुगनू की लोकेशन बताएं",
+                heroJoinBtn: "🌱 वालंटियर बनें",
+                stat1: "सुरक्षित क्षेत्रों में ज़ीरो केमिकल",
+                stat2: "100% वालंटियर ड्रिवेन",
+                stat3: "कम्युनिटी कंजर्वेशन",
+                missionTitle: "हमारा मिशन",
+                missionSub: "बिहार के हर गाँव और शहर में जुगनू के हैबिटेट को प्रोटेक्ट करना",
+                mCard1Title: "लाइट पोल्यूशन कंट्रोल",
+                mCard1Desc: "रात में गैर-जरूरी ब्राइट आउटर लाइट्स को बंद करके जुगनू को चमकने और प्रजनन में मदद करना।",
+                mCard2Title: "पेस्टिसाइड-फ्री स्ट्रिप्स",
+                mCard2Desc: "किसानों को बढ़ावा देना कि वे खेतों के किनारे छोटे स्ट्रिप्स में केमिकल स्प्रे न करें ताकि लार्वा सुरक्षित रहे।",
+                mCard3Title: "स्कूल जागरूकता",
+                mCard3Desc: "बच्चों और युवाओं को पर्यावरण संरक्षण और लोकल बायोडाइवर्सिटी के बारे में जागरूक करना।",
+                formTitle: "✨ आपने आखिरी बार जुगनू कहाँ देखा?",
+                formDesc: "अगर आपने बिहार में कहीं भी जुगनू देखे हैं, तो नीचे दिए गए बटन पर क्लिक करके डिटेल्स शेयर करें। इससे हमें बिहार का फायरफ्लाइ मैप बनाने में मदद मिलेगी!",
+                formBtn: "📝 जुगनू साइटिंग डिटेल्स भरें",
+                actionTitle: "आप कैसे हेल्प कर सकते हैं?",
+                actionSub: "घर बैठे ऑनलाइन या ग्राउंड पर हमारे साथ जुड़ें",
+                aCard1Title: "डिजिटल वालंटियर",
+                aCard1Desc: "गुरुग्राम, पटना या कहीं से भी हमारे सोशल मीडिया कंटेंट को शेयर करें और लोगों को अवेयर करें।",
+                aCard2Title: "ग्राउंड वालंटियर",
+                aCard2Desc: "बिहार में मंथली ड्राइव्स, स्कूल सेशंस और फार्मर मीट्स में फिजिकल प्रेजेंस से सपोर्ट करें।",
+                footer1: "© 2026 प्रोजेक्ट जुगनू बिहार। एक नॉन-प्रॉफिट कम्युनिटी पहल।",
+                footer2: "बिहार के पर्यावरण और प्रकृति संरक्षण के लिए ❤️ से बनाया गया।"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            const langData = translations[currentLang];
+
+            document.getElementById('langToggle').innerText = langData.langBtn;
+            document.getElementById('navReportBtn').innerText = langData.navReportBtn;
+            document.getElementById('heroBadge').innerText = langData.heroBadge;
+            document.getElementById('heroTitle').innerText = langData.heroTitle;
+            document.getElementById('heroDesc').innerText = langData.heroDesc;
+            document.getElementById('heroReportBtn').innerText = langData.heroReportBtn;
+            document.getElementById('heroJoinBtn').innerText = langData.heroJoinBtn;
+            document.getElementById('stat1').innerText = langData.stat1;
+            document.getElementById('stat2').innerText = langData.stat2;
+            document.getElementById('stat3').innerText = langData.stat3;
+            document.getElementById('missionTitle').innerText = langData.missionTitle;
+            document.getElementById('missionSub').innerText = langData.missionSub;
+            document.getElementById('mCard1Title').innerText = langData.mCard1Title;
+            document.getElementById('mCard1Desc').innerText = langData.mCard1Desc;
+            document.getElementById('mCard2Title').innerText = langData.mCard2Title;
+            document.getElementById('mCard2Desc').innerText = langData.mCard2Desc;
+            document.getElementById('mCard3Title').innerText = langData.mCard3Title;
+            document.getElementById('mCard3Desc').innerText = langData.mCard3Desc;
+            document.getElementById('formTitle').innerText = langData.formTitle;
+            document.getElementById('formDesc').innerText = langData.formDesc;
+            document.getElementById('formBtn').innerText = langData.formBtn;
+            document.getElementById('actionTitle').innerText = langData.actionTitle;
+            document.getElementById('actionSub').innerText = langData.actionSub;
+            document.getElementById('aCard1Title').innerText = langData.aCard1Title;
+            document.getElementById('aCard1Desc').innerText = langData.aCard1Desc;
+            document.getElementById('aCard2Title').innerText = langData.aCard2Title;
+            document.getElementById('aCard2Desc').innerText = langData.aCard2Desc;
+            document.getElementById('footer1').innerText = langData.footer1;
+            document.getElementById('footer2').innerText = langData.footer2;
+        }
+    </script>
+</body>
+</html>
