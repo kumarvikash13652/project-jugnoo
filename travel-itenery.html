@@ -6,78 +6,119 @@
     <title>Interactive Calendar - October & November 2026</title>
     <style>
         :root {
-            --primary-pink: #fce4ec;
+            --saffron: #FF9933;
+            --india-green: #138808;
+            --navy-blue: #000080;
             --border-color: #e2e8f0;
             --header-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --accent-color: #db2777;
-            --tag-bg: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Tricolor Top Accent Bar */
+        .tricolor-bar {
+            height: 6px;
+            background: linear-gradient(90deg, var(--saffron) 0%, #ffffff 50%, var(--india-green) 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: #f8fafc;
+            background: linear-gradient(135deg, #fdfbf7 0%, #f4f6f9 100%);
             margin: 0;
-            padding: 20px;
+            padding: 25px 15px;
             color: #1e293b;
+            position: relative;
+        }
+
+        /* Subtle National Monument Watermark Background Pattern */
+        body::before {
+            content: "🏛️ 🇮🇳 🕌 🛕 🏰 🇮🇳 🏛️";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 5rem;
+            opacity: 0.023;
+            pointer-events: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 80px;
+            justify-content: space-around;
+            align-items: center;
+            z-index: -1;
         }
 
         h1 {
             text-align: center;
             font-size: 1.8rem;
             color: #0f172a;
-            margin-bottom: 20px;
+            margin-top: 15px;
+            margin-bottom: 25px;
             letter-spacing: -0.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .calendar-container {
             display: flex;
             flex-direction: column;
             gap: 30px;
-            max-width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
+            width: 100%;
         }
 
         .month-card {
             background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
             display: flex;
             overflow: hidden;
             width: 100%;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            backdrop-filter: blur(10px);
         }
 
         .month-sidebar {
-            background-color: var(--primary-pink);
+            background: linear-gradient(180deg, #fff5eb 0%, #fce4ec 100%);
             writing-mode: vertical-rl;
             transform: rotate(180deg);
             text-align: center;
-            padding: 24px 12px;
-            font-weight: 700;
-            font-size: 1.4rem;
+            padding: 20px 10px;
+            font-weight: 800;
+            font-size: 1.2rem;
             color: #831843;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            border-right: 2px solid rgba(255, 153, 51, 0.2);
         }
 
         .month-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            overflow-x: auto;
+            width: calc(100% - 45px);
         }
 
         .month-grid-wrapper {
             display: grid;
-            grid-template-columns: repeat(7, minmax(145px, 1fr));
+            grid-template-columns: repeat(7, 1fr);
+            width: 100%;
         }
 
         .day-header {
             background-color: var(--header-bg);
             text-align: center;
-            padding: 12px 0;
-            font-size: 0.8rem;
+            padding: 10px 2px;
+            font-size: 0.75rem;
             font-weight: 700;
             color: #64748b;
             border-bottom: 1px solid var(--border-color);
@@ -86,15 +127,16 @@
         }
 
         .day-cell {
-            min-height: 120px;
+            min-height: 105px;
             border-right: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
-            padding: 8px;
+            padding: 6px;
             position: relative;
             background: #fff;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
+            box-sizing: border-box;
         }
 
         .day-cell:nth-child(7n) {
@@ -102,84 +144,125 @@
         }
 
         .day-number {
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 700;
             color: #334155;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            background-color: transparent;
         }
 
-        /* Fixed: Only dark background when explicitly forced, otherwise clean circular standard number */
         .day-cell.has-events .day-number {
-            background-color: transparent;
-            color: #334155;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
         }
 
         .empty-cell {
-            background-color: #fcfcfc;
+            background-color: #fafbfc;
             border-right: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* Clean Backend-Driven Badges UI */
+        /* Modern Event Badges with Full Text Wrapping */
         .event-stack {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
+            width: 100%;
         }
 
         .event-badge {
             display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.73rem;
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            align-items: flex-start;
+            gap: 4px;
+            padding: 3px 5px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.2;
+            width: 100%;
+            box-sizing: border-box;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-            width: fit-content;
-            max-width: 100%;
         }
 
         .badge-travel {
             background-color: #eff6ff;
             color: #1d4ed8;
             border: 1px solid #bfdbfe;
+            border-left: 3px solid #3b82f6;
         }
 
         .badge-location {
             background-color: #f0fdf4;
             color: #15803d;
             border: 1px solid #bbf7d0;
+            border-left: 3px solid #22c55e;
         }
 
         .badge-activity {
             background-color: #fef2f2;
             color: #b91c1c;
             border: 1px solid #fecaca;
+            border-left: 3px solid #ef4444;
         }
 
         .event-badge span.icon {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             flex-shrink: 0;
+            margin-top: 1px;
         }
 
         .event-badge span.text {
-            overflow: hidden;
-            text-overflow: ellipsis;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Mobile Responsiveness Optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px 5px;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+            .month-sidebar {
+                font-size: 0.9rem;
+                padding: 15px 6px;
+                letter-spacing: 1px;
+            }
+            .day-cell {
+                min-height: 85px;
+                padding: 4px;
+            }
+            .day-number {
+                font-size: 0.75rem;
+                width: 18px;
+                height: 18px;
+            }
+            .event-badge {
+                font-size: 0.55rem;
+                padding: 2px 3px;
+            }
+            .day-header {
+                font-size: 0.65rem;
+                padding: 6px 0;
+            }
         }
     </style>
 </head>
 <body>
 
-<h1>October & November 2026 Schedule</h1>
+<div class="tricolor-bar"></div>
+
+<h1><span>🇮🇳</span> October & November 2026 Schedule <span>🏛️</span></h1>
 
 <div class="calendar-container">
 
@@ -220,16 +303,12 @@
 </div>
 
 <script>
-    // Icons configuration
     const icons = {
         travel: "🚂",
         location: "📍",
         activity: "🎯"
     };
 
-    /**
-     * BACKEND CONFIGURATION / DATA OBJECT
-     */
     const octoberData = {
         "4": {
             travel1: "to Patna",
@@ -237,13 +316,13 @@
             travel2: "to New Delhi"
         },
         "6": {
-            activity1: "Learn Driving"
+            activity1: "Lovely - Learn Driving"
         },
         "7": {
-            activity1: "Learn Driving"
+            activity1: "Lovely - Learn Driving"
         },
         "8": {
-            activity1: "Learn Driving"
+            activity1: "Lovely - Learn Driving"
         },
         "9": {
             travel1: "to Amritsar"
@@ -257,13 +336,13 @@
             travel1: "to New Delhi"
         },
         "13": {
-            activity1: "Driving Class"
+            activity1: "Complete Driving Class"
         },
         "14": {
-            activity1: "Driving Class"
+            activity1: "Complete Driving Class"
         },
         "15": {
-            activity1: "Driving Class"
+            activity1: "Complete Driving Class"
         },
         "17": {
             loc1: "Delhi NCR Visit"
@@ -329,14 +408,12 @@
     function buildMonth(gridId, startDayOfWeek, totalDays, dataSet = {}) {
         const grid = document.getElementById(gridId);
         
-        // Empty leading padding cells
         for (let i = 0; i < startDayOfWeek; i++) {
             const empty = document.createElement('div');
             empty.className = 'empty-cell';
             grid.appendChild(empty);
         }
 
-        // Populate days of the month
         for (let day = 1; day <= totalDays; day++) {
             const cell = document.createElement('div');
             const dayKey = `${day}`;
@@ -357,7 +434,6 @@
                 const stack = document.createElement('div');
                 stack.className = 'event-stack';
 
-                // Helper to push badges dynamically
                 if (dayData.travel1) {
                     stack.appendChild(createBadge('travel', icons.travel, dayData.travel1));
                 }
@@ -391,8 +467,6 @@
         return badge;
     }
 
-    // October 2026 starts on Thursday (index 4), has 31 days
-    // November 2026 starts on Sunday (index 0), has 30 days
     window.onload = function() {
         buildMonth('oct-grid', 4, 31, octoberData);
         buildMonth('nov-grid', 0, 30, novemberData);
