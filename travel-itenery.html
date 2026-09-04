@@ -18,7 +18,7 @@
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: #f8fafc;
             margin: 0;
-            padding: 30px;
+            padding: 20px;
             color: #1e293b;
         }
 
@@ -26,16 +26,15 @@
             text-align: center;
             font-size: 1.8rem;
             color: #0f172a;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: -0.5px;
         }
 
         .calendar-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            justify-content: center;
-            max-width: 1450px;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 100%;
             margin: 0 auto;
         }
 
@@ -45,7 +44,7 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
             display: flex;
             overflow: hidden;
-            width: 660px;
+            width: 100%;
             border: 1px solid #e2e8f0;
         }
 
@@ -56,7 +55,7 @@
             text-align: center;
             padding: 24px 12px;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #831843;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -66,18 +65,19 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            overflow-x: auto;
         }
 
         .month-grid-wrapper {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(7, minmax(145px, 1fr));
         }
 
         .day-header {
             background-color: var(--header-bg);
             text-align: center;
             padding: 12px 0;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #64748b;
             border-bottom: 1px solid var(--border-color);
@@ -86,15 +86,15 @@
         }
 
         .day-cell {
-            min-height: 115px;
+            min-height: 120px;
             border-right: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
-            padding: 6px;
+            padding: 8px;
             position: relative;
             background: #fff;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .day-cell:nth-child(7n) {
@@ -102,20 +102,21 @@
         }
 
         .day-number {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #334155;
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
         }
 
+        /* Fixed: Only dark background when explicitly forced, otherwise clean circular standard number */
         .day-cell.has-events .day-number {
-            background-color: #0f172a;
-            color: #fff;
+            background-color: transparent;
+            color: #334155;
         }
 
         .empty-cell {
@@ -128,21 +129,23 @@
         .event-stack {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 4px;
         }
 
         .event-badge {
             display: flex;
             align-items: center;
-            gap: 4px;
-            padding: 2px 5px;
+            gap: 6px;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.62rem;
+            font-size: 0.73rem;
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            width: fit-content;
+            max-width: 100%;
         }
 
         .badge-travel {
@@ -164,7 +167,13 @@
         }
 
         .event-badge span.icon {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .event-badge span.text {
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
 </head>
@@ -220,7 +229,6 @@
 
     /**
      * BACKEND CONFIGURATION / DATA OBJECT
-     * Populated accurately with your full itinerary items.
      */
     const octoberData = {
         "4": {
@@ -379,7 +387,7 @@
     function createBadge(type, iconStr, text) {
         const badge = document.createElement('div');
         badge.className = `event-badge badge-${type}`;
-        badge.innerHTML = `<span class="icon">${iconStr}</span><span>${text}</span>`;
+        badge.innerHTML = `<span class="icon">${iconStr}</span><span class="text">${text}</span>`;
         return badge;
     }
 
