@@ -3,21 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Calendar - October & November 2026</title>
+    <title>Modern Schedule - October & November 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --saffron: #FF9933;
-            --india-green: #138808;
-            --navy-blue: #000080;
+            --white: #FFFFFF;
+            --green: #138808;
+            --navy: #000080;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --header-bg: #f8fafc;
-            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
-        /* Tricolor Top Accent Bar */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Tricolor Top Bar */
         .tricolor-bar {
-            height: 6px;
-            background: linear-gradient(90deg, var(--saffron) 0%, #ffffff 50%, var(--india-green) 100%);
+            height: 5px;
+            background: linear-gradient(90deg, var(--saffron) 0%, var(--white) 50%, var(--green) 100%);
             position: fixed;
             top: 0;
             left: 0;
@@ -26,149 +36,163 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #fdfbf7 0%, #f4f6f9 100%);
-            margin: 0;
-            padding: 25px 15px;
-            color: #1e293b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* Subtle National Monument Watermark Background Pattern */
+        /* National Monuments Watermark Background */
         body::before {
-            content: "🏛️ 🇮🇳 🕌 🛕 🏰 🇮🇳 🏛️";
+            content: "🏛️ 🛕 🕌 🏰 🇮🇳 🏛️ 🛕 🕌";
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            font-size: 5rem;
-            opacity: 0.023;
+            font-size: 4rem;
+            opacity: 0.025;
             pointer-events: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 80px;
+            gap: 60px;
             justify-content: space-around;
             align-items: center;
             z-index: -1;
         }
 
-        h1 {
+        header {
             text-align: center;
-            font-size: 1.8rem;
-            color: #0f172a;
-            margin-top: 15px;
-            margin-bottom: 25px;
-            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        h1 {
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
             font-weight: 800;
+            color: #0f172a;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            letter-spacing: -0.5px;
         }
 
-        .calendar-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .app-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
             width: 100%;
+            max-width: 1400px;
         }
 
+        /* Month Card Design */
         .month-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
-            display: flex;
-            overflow: hidden;
-            width: 100%;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .month-sidebar {
-            background: linear-gradient(180deg, #fff5eb 0%, #fce4ec 100%);
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            text-align: center;
-            padding: 20px 10px;
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: #831843;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-right: 2px solid rgba(255, 153, 51, 0.2);
-        }
-
-        .month-content {
-            flex-grow: 1;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            width: calc(100% - 45px);
+            overflow: hidden;
+            transition: transform 0.2s ease;
         }
 
-        .month-grid-wrapper {
+        .month-card:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        .month-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--saffron);
+        }
+
+        .month-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tricolor-badge {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .dot-saffron { background-color: var(--saffron); }
+        .dot-white { background-color: #fff; border: 1px solid #cbd5e1; }
+        .dot-green { background-color: var(--green); }
+
+        /* Calendar Grid */
+        .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            width: 100%;
+            background-color: var(--border-color);
+            gap: 1px;
+            flex-grow: 1;
         }
 
-        .day-header {
-            background-color: var(--header-bg);
-            text-align: center;
-            padding: 10px 2px;
-            font-size: 0.75rem;
+        .day-name {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-size: 0.7rem;
             font-weight: 700;
-            color: #64748b;
-            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            padding: 10px 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .day-cell {
+            background-color: #ffffff;
             min-height: 105px;
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
             padding: 6px;
-            position: relative;
-            background: #fff;
             display: flex;
             flex-direction: column;
             gap: 4px;
-            box-sizing: border-box;
+            position: relative;
         }
 
-        .day-cell:nth-child(7n) {
-            border-right: none;
+        .day-cell.empty {
+            background-color: #fbfcfd;
         }
 
         .day-number {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            color: #334155;
-            width: 22px;
-            height: 22px;
+            color: var(--text-muted);
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background-color: transparent;
         }
 
         .day-cell.has-events .day-number {
-            background-color: #f1f5f9;
-            color: #0f172a;
-            border: 1px solid #cbd5e1;
+            background-color: #0f172a;
+            color: #fff;
         }
 
-        .empty-cell {
-            background-color: #fafbfc;
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* Modern Event Badges with Full Text Wrapping */
+        /* Modern Event Badges - Fully Responsive & Wrapped */
         .event-stack {
             display: flex;
             flex-direction: column;
@@ -176,83 +200,82 @@
             width: 100%;
         }
 
-        .event-badge {
-            display: flex;
-            align-items: flex-start;
+        .badge {
+            display: inline-flex;
+            align-items: center;
             gap: 4px;
-            padding: 3px 5px;
+            padding: 3px 6px;
             border-radius: 6px;
             font-size: 0.65rem;
             font-weight: 600;
-            white-space: normal;
-            word-break: break-word;
-            overflow-wrap: break-word;
             line-height: 1.2;
             width: 100%;
-            box-sizing: border-box;
+            word-break: break-word;
+            overflow-wrap: break-word;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
 
         .badge-travel {
             background-color: #eff6ff;
             color: #1d4ed8;
-            border: 1px solid #bfdbfe;
-            border-left: 3px solid #3b82f6;
+            border-left: 2.5px solid #3b82f6;
+            border-top: 1px solid #bfdbfe;
+            border-right: 1px solid #bfdbfe;
+            border-bottom: 1px solid #bfdbfe;
         }
 
         .badge-location {
             background-color: #f0fdf4;
             color: #15803d;
-            border: 1px solid #bbf7d0;
-            border-left: 3px solid #22c55e;
+            border-left: 2.5px solid #22c55e;
+            border-top: 1px solid #bbf7d0;
+            border-right: 1px solid #bbf7d0;
+            border-bottom: 1px solid #bbf7d0;
         }
 
         .badge-activity {
             background-color: #fef2f2;
             color: #b91c1c;
-            border: 1px solid #fecaca;
-            border-left: 3px solid #ef4444;
+            border-left: 2.5px solid #ef4444;
+            border-top: 1px solid #fecaca;
+            border-right: 1px solid #fecaca;
+            border-bottom: 1px solid #fecaca;
         }
 
-        .event-badge span.icon {
+        .badge-icon {
             font-size: 0.7rem;
             flex-shrink: 0;
-            margin-top: 1px;
         }
 
-        .event-badge span.text {
+        .badge-text {
             word-break: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Mobile Responsiveness Optimizations */
+        /* Mobile Optimization */
         @media (max-width: 768px) {
             body {
-                padding: 10px 5px;
+                padding: 10px 4px;
             }
-            h1 {
-                font-size: 1.3rem;
-            }
-            .month-sidebar {
-                font-size: 0.9rem;
-                padding: 15px 6px;
-                letter-spacing: 1px;
+            .app-container {
+                gap: 16px;
             }
             .day-cell {
-                min-height: 85px;
+                min-height: 90px;
                 padding: 4px;
             }
             .day-number {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 width: 18px;
                 height: 18px;
             }
-            .event-badge {
+            .badge {
                 font-size: 0.55rem;
-                padding: 2px 3px;
+                padding: 2px 4px;
+                gap: 2px;
             }
-            .day-header {
-                font-size: 0.65rem;
+            .day-name {
+                font-size: 0.6rem;
                 padding: 6px 0;
             }
         }
@@ -262,41 +285,49 @@
 
 <div class="tricolor-bar"></div>
 
-<h1><span>🇮🇳</span> October & November 2026 Schedule <span>🏛️</span></h1>
+<header>
+    <h1><span>🇮🇳</span> October & November 2026 Schedule <span>🏛️</span></h1>
+</header>
 
-<div class="calendar-container">
+<div class="app-container">
 
-    <!-- OCTOBER 2026 -->
     <div class="month-card">
-        <div class="month-sidebar">October</div>
-        <div class="month-content">
-            <div class="month-grid-wrapper">
-                <div class="day-header">Sun</div>
-                <div class="day-header">Mon</div>
-                <div class="day-header">Tue</div>
-                <div class="day-header">Wed</div>
-                <div class="day-header">Thu</div>
-                <div class="day-header">Fri</div>
-                <div class="day-header">Sat</div>
+        <div class="month-header">
+            <span class="month-title">October 2026</span>
+            <div class="tricolor-badge">
+                <span class="dot dot-saffron"></span>
+                <span class="dot dot-white"></span>
+                <span class="dot dot-green"></span>
             </div>
-            <div class="month-grid-wrapper" id="oct-grid"></div>
+        </div>
+        <div class="calendar-grid" id="oct-grid">
+            <div class="day-name">Sun</div>
+            <div class="day-name">Mon</div>
+            <div class="day-name">Tue</div>
+            <div class="day-name">Wed</div>
+            <div class="day-name">Thu</div>
+            <div class="day-name">Fri</div>
+            <div class="day-name">Sat</div>
         </div>
     </div>
 
-    <!-- NOVEMBER 2026 -->
     <div class="month-card">
-        <div class="month-sidebar">November</div>
-        <div class="month-content">
-            <div class="month-grid-wrapper">
-                <div class="day-header">Sun</div>
-                <div class="day-header">Mon</div>
-                <div class="day-header">Tue</div>
-                <div class="day-header">Wed</div>
-                <div class="day-header">Thu</div>
-                <div class="day-header">Fri</div>
-                <div class="day-header">Sat</div>
+        <div class="month-header">
+            <span class="month-title">November 2026</span>
+            <div class="tricolor-badge">
+                <span class="dot dot-saffron"></span>
+                <span class="dot dot-white"></span>
+                <span class="dot dot-green"></span>
             </div>
-            <div class="month-grid-wrapper" id="nov-grid"></div>
+        </div>
+        <div class="calendar-grid" id="nov-grid">
+            <div class="day-name">Sun</div>
+            <div class="day-name">Mon</div>
+            <div class="day-name">Tue</div>
+            <div class="day-name">Wed</div>
+            <div class="day-name">Thu</div>
+            <div class="day-name">Fri</div>
+            <div class="day-name">Sat</div>
         </div>
     </div>
 
@@ -306,152 +337,77 @@
     const icons = {
         travel: "🚂",
         location: "📍",
-        activity: "🎯"
+        activity: "🎯",
+        party: "🎉"
     };
 
     const octoberData = {
-        "4": {
-            travel1: "to Patna",
-            loc1: "Patna Zoo",
-            travel2: "to New Delhi"
-        },
-        "6": {
-            activity1: "Lovely - Learn Driving"
-        },
-        "7": {
-            activity1: "Lovely - Learn Driving"
-        },
-        "8": {
-            activity1: "Lovely - Learn Driving"
-        },
-        "9": {
-            travel1: "to Amritsar"
-        },
-        "10": {
-            loc1: "Golden Temple",
-            loc2: "Wagah Border"
-        },
-        "11": {
-            loc1: "Jallianwala Bagh",
-            travel1: "to New Delhi"
-        },
-        "13": {
-            activity1: "Complete Driving Class"
-        },
-        "14": {
-            activity1: "Complete Driving Class"
-        },
-        "15": {
-            activity1: "Complete Driving Class"
-        },
-        "17": {
-            loc1: "Delhi NCR Visit"
-        },
-        "18": {
-            loc1: "Delhi NCR Visit"
-        },
-        "21": {
-            activity1: "Ishi Birthday",
-            party: "Party Celebration"
-        },
-        "23": {
-            travel1: "to Mathura",
-            loc1: "Vrindavan"
-        },
-        "24": {
-            loc1: "Bharatpur Bird Sanctuary"
-        },
-        "25": {
-            travel1: "to New Delhi"
-        },
-        "26": {
-            activity1: "Swimming (Ishi)"
-        },
-        "27": {
-            activity1: "Swimming (Ishi)"
-        },
-        "28": {
-            activity1: "Swimming (Ishi)"
-        },
-        "29": {
-            activity1: "Swimming (Ishi)"
-        },
-        "30": {
-            activity1: "Swimming (Ishi)"
-        },
-        "31": {
-            activity1: "Swimming (Ishi)"
-        }
+        "4": { travel1: "to Patna", loc1: "Patna Zoo", travel2: "to New Delhi" },
+        "6": { activity1: "Learn Driving" },
+        "7": { activity1: "Learn Driving" },
+        "8": { activity1: "Learn Driving" },
+        "9": { travel1: "to Amritsar" },
+        "10": { loc1: "Golden Temple", loc2: "Wagah Border" },
+        "11": { loc1: "Jallianwala Bagh", travel1: "to New Delhi" },
+        "13": { activity1: "Driving Class" },
+        "14": { activity1: "Driving Class" },
+        "15": { activity1: "Driving Class" },
+        "17": { loc1: "Delhi NCR Visit" },
+        "18": { loc1: "Delhi NCR Visit" },
+        "21": { activity1: "Ishi Birthday", party: "Party Celebration" },
+        "23": { travel1: "to Mathura", loc1: "Vrindavan" },
+        "24": { loc1: "Bharatpur Bird Sanctuary" },
+        "25": { travel1: "to New Delhi" },
+        "26": { activity1: "Swimming (Ishi)" },
+        "27": { activity1: "Swimming (Ishi)" },
+        "28": { activity1: "Swimming (Ishi)" },
+        "29": { activity1: "Swimming (Ishi)" },
+        "30": { activity1: "Swimming (Ishi)" },
+        "31": { activity1: "Swimming (Ishi)" }
     };
 
     const novemberData = {
-        "1": {
-            activity1: "Swimming (Ishi)"
-        },
-        "2": {
-            activity1: "Swimming (Ishi)"
-        },
-        "3": {
-            activity1: "Swimming (Ishi)"
-        },
-        "4": {
-            activity1: "Swimming (Ishi)"
-        },
-        "5": {
-            activity1: "Swimming (Ishi)"
-        },
-        "6": {
-            travel1: "to Madhepura"
-        }
+        "1": { activity1: "Swimming (Ishi)" },
+        "2": { activity1: "Swimming (Ishi)" },
+        "3": { activity1: "Swimming (Ishi)" },
+        "4": { activity1: "Swimming (Ishi)" },
+        "5": { activity1: "Swimming (Ishi)" },
+        "6": { travel1: "to Madhepura" }
     };
 
-    function buildMonth(gridId, startDayOfWeek, totalDays, dataSet = {}) {
+    function renderMonth(gridId, startDayOfWeek, totalDays, dataSet) {
         const grid = document.getElementById(gridId);
-        
+
+        // Render empty lead cells
         for (let i = 0; i < startDayOfWeek; i++) {
-            const empty = document.createElement('div');
-            empty.className = 'empty-cell';
-            grid.appendChild(empty);
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'day-cell empty';
+            grid.appendChild(emptyCell);
         }
 
+        // Render day cells
         for (let day = 1; day <= totalDays; day++) {
             const cell = document.createElement('div');
             const dayKey = `${day}`;
-            const dayData = dataSet[dayKey];
+            const data = dataSet[dayKey];
 
-            if (dayData) {
-                cell.className = 'day-cell has-events';
-            } else {
-                cell.className = 'day-cell';
-            }
+            cell.className = data ? 'day-cell has-events' : 'day-cell';
 
-            const num = document.createElement('div');
-            num.className = 'day-number';
-            num.innerText = day;
-            cell.appendChild(num);
+            const numDiv = document.createElement('div');
+            numDiv.className = 'day-number';
+            numDiv.innerText = day;
+            cell.appendChild(numDiv);
 
-            if (dayData) {
+            if (data) {
                 const stack = document.createElement('div');
                 stack.className = 'event-stack';
 
-                if (dayData.travel1) {
-                    stack.appendChild(createBadge('travel', icons.travel, dayData.travel1));
-                }
-                if (dayData.travel2) {
-                    stack.appendChild(createBadge('travel', icons.travel, dayData.travel2));
-                }
-                if (dayData.loc1) {
-                    stack.appendChild(createBadge('location', icons.location, dayData.loc1));
-                }
-                if (dayData.loc2) {
-                    stack.appendChild(createBadge('location', icons.location, dayData.loc2));
-                }
-                if (dayData.activity1) {
-                    stack.appendChild(createBadge('activity', icons.activity, dayData.activity1));
-                }
-                if (dayData.party) {
-                    stack.appendChild(createBadge('activity', "🎉", dayData.party));
-                }
+                if (data.travel1) stack.appendChild(createBadge('travel', icons.travel, data.travel1));
+                if (data.travel2) stack.appendChild(createBadge('travel', icons.travel, data.travel2));
+                if (data.loc1) stack.appendChild(createBadge('location', icons.location, data.loc1));
+                if (data.loc2) stack.appendChild(createBadge('location', icons.location, data.loc2));
+                if (data.activity1) stack.appendChild(createBadge('activity', icons.activity, data.activity1));
+                if (data.party) stack.appendChild(createBadge('activity', icons.party, data.party));
 
                 cell.appendChild(stack);
             }
@@ -460,17 +416,19 @@
         }
     }
 
-    function createBadge(type, iconStr, text) {
+    function createBadge(type, icon, text) {
         const badge = document.createElement('div');
-        badge.className = `event-badge badge-${type}`;
-        badge.innerHTML = `<span class="icon">${iconStr}</span><span class="text">${text}</span>`;
+        badge.className = `badge badge-${type}`;
+        badge.innerHTML = `<span class="badge-icon">${icon}</span><span class="badge-text">${text}</span>`;
         return badge;
     }
 
-    window.onload = function() {
-        buildMonth('oct-grid', 4, 31, octoberData);
-        buildMonth('nov-grid', 0, 30, novemberData);
-    };
+    window.addEventListener('DOMContentLoaded', () => {
+        // Oct 2026 starts on Thursday (index 4), 31 days
+        renderMonth('oct-grid', 4, 31, octoberData);
+        // Nov 2026 starts on Sunday (index 0), 30 days
+        renderMonth('nov-grid', 0, 30, novemberData);
+    });
 </script>
 
 </body>
