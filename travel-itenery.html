@@ -86,15 +86,15 @@
         }
 
         .day-cell {
-            min-height: 105px;
+            min-height: 115px;
             border-right: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
-            padding: 8px;
+            padding: 6px;
             position: relative;
             background: #fff;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .day-cell:nth-child(7n) {
@@ -128,16 +128,16 @@
         .event-stack {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 2px;
         }
 
         .event-badge {
             display: flex;
             align-items: center;
-            gap: 5px;
-            padding: 3px 6px;
+            gap: 4px;
+            padding: 2px 5px;
             border-radius: 4px;
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
@@ -164,7 +164,7 @@
         }
 
         .event-badge span.icon {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
     </style>
 </head>
@@ -220,37 +220,101 @@
 
     /**
      * BACKEND CONFIGURATION / DATA OBJECT
-     * Easily configure your plans here. If a day has no properties, 
-     * the calendar cell stays completely blank and clean automatically.
+     * Populated accurately with your full itinerary items.
      */
     const octoberData = {
         "4": {
             travel1: "to Patna",
             loc1: "Patna Zoo",
-            travel2: "to Delhi"
+            travel2: "to New Delhi"
         },
-        "12": {
-            activity1: "Swimming",
-            loc1: "City Club"
+        "6": {
+            activity1: "Learn Driving"
         },
-        "20": {
-            travel1: "to Jaipur",
-            activity1: "Event"
+        "7": {
+            activity1: "Learn Driving"
+        },
+        "8": {
+            activity1: "Learn Driving"
+        },
+        "9": {
+            travel1: "to Amritsar"
+        },
+        "10": {
+            loc1: "Golden Temple",
+            loc2: "Wagah Border"
+        },
+        "11": {
+            loc1: "Jallianwala Bagh",
+            travel1: "to New Delhi"
+        },
+        "13": {
+            activity1: "Driving Class"
+        },
+        "14": {
+            activity1: "Driving Class"
+        },
+        "15": {
+            activity1: "Driving Class"
+        },
+        "17": {
+            loc1: "Delhi NCR Visit"
+        },
+        "18": {
+            loc1: "Delhi NCR Visit"
+        },
+        "21": {
+            activity1: "Ishi Birthday",
+            party: "Party Celebration"
+        },
+        "23": {
+            travel1: "to Mathura",
+            loc1: "Vrindavan"
+        },
+        "24": {
+            loc1: "Bharatpur Bird Sanctuary"
+        },
+        "25": {
+            travel1: "to New Delhi"
+        },
+        "26": {
+            activity1: "Swimming (Ishi)"
+        },
+        "27": {
+            activity1: "Swimming (Ishi)"
+        },
+        "28": {
+            activity1: "Swimming (Ishi)"
+        },
+        "29": {
+            activity1: "Swimming (Ishi)"
+        },
+        "30": {
+            activity1: "Swimming (Ishi)"
+        },
+        "31": {
+            activity1: "Swimming (Ishi)"
         }
     };
 
     const novemberData = {
+        "1": {
+            activity1: "Swimming (Ishi)"
+        },
+        "2": {
+            activity1: "Swimming (Ishi)"
+        },
+        "3": {
+            activity1: "Swimming (Ishi)"
+        },
+        "4": {
+            activity1: "Swimming (Ishi)"
+        },
         "5": {
-            travel1: "to Agra",
-            loc1: "Taj Mahal"
+            activity1: "Swimming (Ishi)"
         },
-        "14": {
-            activity1: "Birthday",
-            party: "Family Party"
-        },
-        "25": {
-            travel1: "to Varanasi",
-            loc1: "Ghats"
+        "6": {
+            travel1: "to Madhepura"
         }
     };
 
