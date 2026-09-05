@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lovely Bites - Memory Feed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: #262626;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background-color: #ffffff;
+            border-right: 1px solid #dbdbdb;
+            position: fixed;
+            top: 0;
+            left: -280px;
+            height: 100%;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            color: #db0000;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #262626;
+        }
+
+        .menu-group {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #efefef;
+            padding-bottom: 10px;
+        }
+
+        .menu-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: #262626;
+            cursor: pointer;
+            padding: 8px 5px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .menu-group-header:hover {
+            background: #f1f1f1;
+        }
+
+        .toggle-icon {
+            font-size: 16px;
+            font-weight: bold;
+            width: 20px;
+            text-align: center;
+        }
+
+        .submenu {
+            list-style: none;
+            padding-left: 15px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .submenu.open {
+            display: block;
+        }
+
+        .submenu li {
+            margin-bottom: 8px;
+        }
+
+        .submenu li a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            display: block;
+            padding: 5px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .submenu li a:hover {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+
+        /* Floating Toggle Button (+) */
+        .menu-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+
+        /* Main Content Layout */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 935px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+
+        .main-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .folder-section {
+            margin-bottom: 40px;
+        }
+
+        .folder-header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #dbdbdb;
+            color: #333;
+        }
+
+        /* Instagram Style Grid */
+        .grid-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-gallery {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+            }
+        }
+
+        .grid-item {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-box {
+            width: 100%;
+            padding-bottom: 100%; /* Square Aspect Ratio */
+            position: relative;
+            background-color: #efefef;
+        }
+
+        .media-box img, .media-box video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-title {
+            padding: 8px;
+            font-size: 12px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Toggle Button (+) -->
+    <button class="menu-toggle" onclick="toggleSidebar()">+</button>
+
+    <!-- Left Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Navigation Menu</h2>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+
+        <!-- Section 1: Quick Links (Personal Pages) -->
+        <div class="menu-group">
+            <div class="menu-group-header" onclick="toggleSubmenu('quickLinksSub', this)">
+                <span>⚡ Quick Links</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <ul class="submenu" id="quickLinksSub">
+                <li><a href="index.html">🏠 Home / Dashboard</a></li>
+                <li><a href="profile.html">👤 My Profile</a></li>
+                <li><a href="notes.html">📝 Personal Notes</a></li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Drive Links (Dynamic Sub-Folders) -->
+        <div class="menu-group">
+            <div class="menu-group-header" onclick="toggleSubmenu('driveLinksSub', this)">
+                <span>📁 Drive Folders</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <ul class="submenu" id="driveLinksSub" style="list-style:none;">
+                <!-- JavaScript will populate drive subfolders here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="container">
+            <h1 class="main-title">Ishi Anand</h1>
+            <div id="dynamic-content-area">
+                <p style="text-align: center; color: #777;">Loading folders from Google Drive...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function toggleSubmenu(submenuId, headerElement) {
+            const submenu = document.getElementById(submenuId);
+            const icon = headerElement.querySelector('.toggle-icon');
+            submenu.classList.toggle('open');
+            icon.textContent = submenu.classList.contains('open') ? '-' : '+';
+        }
+
+        // Yeh raha tera Google Apps Script ka Web App URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxARedhhJelPvvq95bHmMtNyAy9aVebff7LWJu7qt59BpeYSt9TLvbKJm3ipB3B-TLHsg/exec";
+
+        async function fetchDriveData() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                
+                const contentArea = document.getElementById('dynamic-content-area');
+                const driveLinksSub = document.getElementById('driveLinksSub');
+                
+                contentArea.innerHTML = "";
+                driveLinksSub.innerHTML = "";
+
+                data.forEach((folder, index) => {
+                    const folderIdSlug = `folder-${index}`;
+                    
+                    // 1. Sidebar me sub-folder ka link add karo
+                    driveLinksSub.innerHTML += `<li><a href="#${folderIdSlug}">📁 ${folder.folderName}</a></li>`;
+
+                    // 2. Main page par folder ka header aur grid container banao
+                    let filesHTML = "";
+                    if (folder.files.length === 0) {
+                        filesHTML = `<p style="padding: 10px; font-size: 14px; color: #888;">No media found in this folder.</p>`;
+                    } else {
+                        filesHTML = `<div class="grid-gallery">`;
+                        folder.files.forEach(file => {
+                            let mediaElement = "";
+                            if (file.type === "image") {
+                                mediaElement = `<img src="https://lh3.googleusercontent.com/d/${file.id}" alt="${file.name}" loading="lazy">`;
+                            } else {
+                                mediaElement = `<video src="https://lh3.googleusercontent.com/d/${file.id}" controls></video>`;
+                            }
+
+                            filesHTML += `
+                                <div class="grid-item">
+                                    <div class="media-box">
+                                        ${mediaElement}
+                                    </div>
+                                    <div class="item-title">${file.name}</div>
+                                </div>
+                            `;
+                        });
+                        filesHTML += `</div>`;
+                    }
+
+                    const sectionHTML = `
+                        <div class="folder-section" id="${folderIdSlug}">
+                            <h2 class="folder-header-title">📁 ${folder.folderName}</h2>
+                            ${filesHTML}
+                        </div>
+                    `;
+                    contentArea.innerHTML += sectionHTML;
+                });
+
+            } catch (error) {
+                console.error("Error fetching drive data:", error);
+                document.getElementById('dynamic-content-area').innerHTML = `<p style="text-align: center; color: red;">Failed to load drive folders. Check network or permissions.</p>`;
+            }
+        }
+
+        fetchDriveData();
+    </script>
+</body>
+</html>
