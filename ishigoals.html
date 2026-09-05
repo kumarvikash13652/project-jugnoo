@@ -1,0 +1,226 @@
+    <!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ishi's Age-wise Goal Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Top Navigation Bar / Go Back Button */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            color: #007bff;
+            border: 1px solid #007bff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #007bff;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Goals Timeline Cards Container */
+        .goals-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        /* Individual Card Design */
+        .goal-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            padding: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-color: #b0c4de;
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .goal-age {
+            font-size: 18px;
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .goal-date {
+            font-size: 13px;
+            color: #777;
+            background: #f1f3f5;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Status Badges */
+        .goal-status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .badge-achieved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-wip {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-upcoming {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        /* Goal Details Grid */
+        .goal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .goal-item {
+            background: #fafbfc;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #007bff;
+        }
+
+        .goal-item strong {
+            color: #222;
+        }
+
+        .goal-metrics {
+            grid-column: span 2;
+            display: flex;
+            gap: 20px;
+            background: #eef2f7;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Bottom Footer Navigation */
+        .footer-nav {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Mobile View */
+        @media (max-width: 600px) {
+            .goal-body {
+                grid-template-columns: 1fr;
+            }
+            .goal-metrics {
+                grid-column: span 1;
+            }
+            .goal-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Top Navigation -->
+        <div class="nav-bar">
+            <a href="index.html" class="back-btn">⬅ Go Back to Home</a>
+        </div>
+
+        <!-- Title Section -->
+        <div class="page-title">
+            <h1>🚀 Ishi's Age-wise Milestone & Goals</h1>
+            <p>A structured roadmap tracking education, sports, physical growth, and achievements over the years.</p>
+        </div>
+
+        <!-- Dynamic Goals Container (Loaded from JS) -->
+        <div class="goals-container" id="goalsContainer">
+            <p style="text-align: center; color: #777;">Loading goal roadmap...</p>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="footer-nav">
+            <a href="index.html" class="back-btn">⬅ Go Back to Home</a>
+        </div>
+    </div>
+
+    <!-- External Config File containing all the Data -->
+    <script src="goals-config.js"></script>
+
+</body>
+</html>
