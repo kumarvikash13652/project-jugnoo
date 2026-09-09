@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Pool Blueprint Visualizer</title>
+    <!-- Tailwind CSS for high-quality dashboard layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar styling for a premium athletic feel */
+        ::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e40af;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+        
+        /* Animated water ripple effect for visual beauty */
+        .water-bg {
+            background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .water-bg::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.05) 75%, transparent 75%, transparent);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            animation: ripple 20s linear infinite;
+        }
+        @keyframes ripple {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 500px; }
+        }
+        
+        /* Swimmer animation track */
+        @keyframes swim-lap {
+            0% { left: 4%; transform: scaleX(1); }
+            48% { left: 92%; transform: scaleX(1); }
+            50% { left: 92%; transform: scaleX(-1); }
+            98% { left: 4%; transform: scaleX(-1); }
+            100% { left: 4%; transform: scaleX(1); }
+        }
+        .animate-swimmer {
+            animation: swim-lap 12s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen">
+
+    <div class="container mx-auto px-4 py-6 max-w-6xl">
+        <!-- Header Banner -->
+        <header class="bg-slate-900 border-b border-blue-900/50 rounded-2xl p-6 mb-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <span class="bg-blue-500/10 text-blue-400 text-xs font-semibold px-3 py-1 rounded-full border border-blue-500/20">Elite Athlete Training Dimension</span>
+                <h1 class="text-2xl md:text-3xl font-bold mt-2 bg-gradient-to-r font-black from-blue-400 to-sky-400 bg-clip-text text-transparent">
+                    Beti Ka Practice Pool Blueprint
+                </h1>
+                <p class="text-slate-400 text-sm mt-1">25-Meter Short Course Standard Single Lane Visualizer</p>
+            </div>
+            <div class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 flex gap-6 text-center shadow-inner">
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">Length</p>
+                    <p class="text-lg font-bold text-blue-400">82 Feet <span class="text-xs text-slate-400">(25m)</span></p>
+                </div>
+                <div class="border-l border-slate-800"></div>
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">Width</p>
+                    <p class="text-lg font-bold text-blue-400">8 Feet</p>
+                </div>
+                <div class="border-l border-slate-800"></div>
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">Depth</p>
+                    <p class="text-lg font-bold text-emerald-400">4.5 Feet</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Technical Calculations & Specs Alert -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                    <!-- SVG Water Icon -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400">Total Fluid Volume</p>
+                    <p class="text-sm font-semibold text-slate-200 mt-0.5" id="volume-calc">
+                        82ft × 8ft × 4.5ft = 2,952 cu.ft
+                    </p>
+                    <p class="text-xs text-blue-400 font-bold">~ 83,591 Liters Water Capacity</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                <div class="p-3 bg-amber-500/10 rounded-lg text-amber-400">
+                    <!-- SVG Stairs Icon -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400">Corner Stairs Integration</p>
+                    <p class="text-sm font-semibold text-slate-200 mt-0.5">Top-Left Angular Alcove</p>
+                    <p class="text-xs text-amber-400">Keeps the Swim Lane 100% Free</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                <div class="p-3 bg-emerald-500/10 rounded-lg text-emerald-400">
+                    <!-- SVG Target Icon -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400">Olympic Standard Features</p>
+                    <p class="text-sm font-semibold text-slate-200 mt-0.5">Flat Turning Walls for Flips</p>
+                    <p class="text-xs text-emerald-400">Continuous 4.5ft Safe Floor</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- View Controls & Dashboard Tabs -->
+        <div class="flex flex-wrap gap-2 mb-4 bg-slate-900 p-2 rounded-xl border border-slate-800">
+            <button onclick="switchView('top-down')" id="btn-top-down" class="flex-1 md:flex-none px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white shadow transition-all">
+                Top-Down Blueprint (2D Plan)
+            </button>
+            <button onclick="switchView('cross-section')" id="btn-cross-section" class="flex-1 md:flex-none px-4 py-2 text-sm font-medium rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all">
+                Side Cross-Section (Depth Profile)
+            </button>
+            <div class="w-full md:w-auto md:ml-auto flex items-center justify-between p-1 bg-slate-950 rounded-lg border border-slate-800 gap-4 px-3">
+                <span class="text-xs font-semibold text-slate-400">Lap Simulator:</span>
+                <button onclick="toggleSimulation()" id="btn-sim" class="bg-emerald-600 text-white text-xs px-3 py-1.5 rounded font-bold shadow hover:bg-emerald-500 transition-all">
+                    Start Swimmer Simulation
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN DISPLAY PANEL -->
+        <main class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl relative">
+            
+            <!-- VIEW 1: TOP DOWN BLUEPRINT (DEFAULT) -->
+            <div id="view-top-down" class="block w-full overflow-x-auto py-8">
+                <p class="text-xs text-slate-400 mb-2 flex items-center gap-1">
+                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Scroll horizontally to view full 82-foot stretch on mobile/smaller devices.
+                </p>
+
+                <!-- Scale Indicator -->
+                <div class="min-w-[1000px] flex justify-between text-[11px] text-slate-500 px-2 mb-1">
+                    <span>0 Ft (Start Wall)</span>
+                    <span>20 Ft</span>
+                    <span>40 Ft (Midway)</span>
+                    <span>60 Ft</span>
+                    <span>82 Ft (Turning Wall)</span>
+                </div>
+
+                <!-- Main Physical Pool Boundary Mockup -->
+                <div class="min-w-[1000px] h-48 border-4 border-slate-700 bg-slate-800 rounded relative shadow-inner flex items-center">
+                    
+                    <!-- Dimension Label - Width -->
+                    <div class="absolute -left-10 top-0 bottom-0 flex flex-col justify-center items-center text-xs font-bold text-slate-400">
+                        <span>8</span>
+                        <span>F</span>
+                        <span>t</span>
+                        <svg class="w-3 h-12 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m-4 12v4m0 0l-4-4m4 4l4-4"/></svg>
+                    </div>
+
+                    <!-- Dimension Label - Length -->
+                    <div class="absolute left-0 right-0 -bottom-8 flex justify-center items-center text-xs font-bold text-slate-400 gap-2">
+                        <svg class="w-24 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                        <span>82 Feet (Full Long Athletic Track)</span>
+                        <svg class="w-24 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+
+                    <!-- Water Mass Graphic -->
+                    <div class="w-full h-full water-bg relative flex items-center px-1">
+                        
+                        <!-- Top-Left Corner Built-in Stairs (Compact Recessed Design) -->
+                        <div class="absolute top-0 left-0 w-16 h-12 bg-slate-900 border-r border-b border-blue-400/40 z-20 grid grid-rows-3 text-[9px] text-slate-400 font-mono shadow-md">
+                            <div class="border-b border-slate-700/50 bg-slate-800/90 pl-1 flex items-center">Step 1</div>
+                            <div class="border-b border-slate-700/50 bg-slate-700/90 pl-1 flex items-center">Step 2</div>
+                            <div class="bg-slate-600/90 pl-1 flex items-center">Step 3</div>
+                        </div>
+                        <div class="absolute top-12 left-2 text-[10px] text-amber-300 font-medium z-20">Stairs Corner</div>
+
+                        <!-- Black Center Lane Guideline (Target Line) with 'T' Endings -->
+                        <div class="w-[94%] mx-auto h-1.5 bg-slate-950 relative flex items-center">
+                            <!-- Left T-Bar -->
+                            <div class="absolute left-6 w-1 h-8 bg-slate-950 -translate-y-0.5"></div>
+                            <!-- Right T-Bar -->
+                            <div class="absolute right-6 w-1 h-8 bg-slate-950 -translate-y-0.5"></div>
+                        </div>
+
+                        <!-- Animated Swimmer Mockup Avatar -->
+                        <div id="swimmer-avatar" class="hidden absolute top-1/3 w-10 h-10 bg-amber-400 border-2 border-slate-950 rounded-full flex items-center justify-center font-bold text-xs text-slate-950 shadow-lg animate-swimmer z-30">
+                            🏊‍♀️
+                        </div>
+
+                        <!-- Safety Lane Float Mockup markers on borders -->
+                        <div class="absolute top-0 left-0 right-0 h-1 flex justify-between px-24">
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <div class="w-2 h-2 bg-white rounded-full"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div class="w-2 h-2 bg-white rounded-full"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div class="w-2 h-2 bg-white rounded-full"></div>
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Legend Details below layout -->
+                <div class="mt-12 bg-slate-950 p-4 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-2 bg-slate-950 rounded"></div>
+                        <p class="text-slate-300"><strong class="text-slate-100">Center Target Line:</strong> Standard lane alignment marker for underwater direction alignment.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 bg-slate-900 border border-blue-400/40 flex items-center justify-center text-[8px]">Steps</div>
+                        <p class="text-slate-300"><strong class="text-slate-100">Recessed Stairs:</strong> Corner entry alcove avoids taking up lane width space.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-2 bg-gradient-to-r from-red-500 to-blue-500 rounded"></div>
+                        <p class="text-slate-300"><strong class="text-slate-100">Flat Finishing Wall:</strong> 90-degree engineered surface optimal for high-speed flip turns.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: CROSS SECTION PROFILE (HIDDEN BY DEFAULT) -->
+            <div id="view-cross-section" class="hidden w-full py-8">
+                <!-- Scale indicator for depth -->
+                <div class="w-full h-56 border-l-4 border-b-4 border-r-4 border-slate-600 bg-slate-950 relative rounded-b flex flex-col justify-end">
+                    
+                    <!-- Water Layer Representation -->
+                    <div class="w-full h-[85%] water-bg border-t-2 border-cyan-300/40 relative p-4 flex flex-col justify-between">
+                        
+                        <!-- Stairs Profile indicators -->
+                        <div class="absolute top-0 left-0 w-16 h-24 flex flex-col opacity-60">
+                            <div class="h-8 w-6 bg-slate-800 border border-slate-600 self-start text-[8px] p-1">Step 1</div>
+                            <div class="h-8 w-10 bg-slate-700 border border-slate-600 self-start text-[8px] p-1">-1.5 Ft</div>
+                            <div class="h-8 w-16 bg-slate-600 border border-slate-600 self-start text-[8px] p-1">-3.0 Ft</div>
+                        </div>
+
+                        <!-- Depth Indicators Lines -->
+                        <div class="absolute left-0 right-0 top-1/2 border-t border-dashed border-sky-400/20 text-center">
+                            <span class="bg-slate-950/60 px-2 py-0.5 rounded text-[10px] text-sky-400">Mid-Depth Level: 2.25 Feet</span>
+                        </div>
+
+                        <div class="text-center w-full z-10">
+                            <p class="text-lg font-black text-slate-100 uppercase tracking-widest">Constant Depth Profile</p>
+                            <p class="text-xs text-blue-200 mt-1">Flat continuous floor allows unbroken tumble turn mechanics safely everywhere</p>
+                        </div>
+
+                        <!-- Bottom Floor Label Marker -->
+                        <div class="w-full flex justify-between items-center text-xs text-emerald-400 font-bold font-mono pt-4 border-t border-emerald-500/20">
+                            <span>Start Wall (4.5 Ft Deep)</span>
+                            <span class="bg-emerald-950 px-3 py-1 rounded border border-emerald-500/30">📏 Constant Depth: 4.5 Feet (1.37 Meters)</span>
+                            <span>End Turning Wall (4.5 Ft Deep)</span>
+                        </div>
+                    </div>
+
+                    <!-- Depth Ruler Grid Lines -->
+                    <div class="absolute -right-4 top-0 bottom-0 flex flex-col justify-between text-[10px] text-slate-500 font-mono translate-x-8">
+                        <span>0.0 Ft (Surface)</span>
+                        <span>1.5 Ft</span>
+                        <span>3.0 Ft</span>
+                        <span class="text-emerald-400 font-bold">4.5 Ft (Floor)</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs space-y-2">
+                    <p class="text-slate-300 font-semibold text-sm text-blue-400">Coach Pro-Tip for 4.5 Feet Depth:</p>
+                    <p class="text-slate-400 leading-relaxed">
+                        An athletic constant depth layout of 4.5 feet is perfect for home-training centers. It contains enough water resistance to eliminate wave rebounce from the pool floor, ensuring clean hydrodynamics for streamline glide practice, while remaining safe enough for a child to comfortably stand up anywhere if exhausted during strenuous endurance drills.
+                    </p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Construction & Coaching Recommendations Footer -->
+        <footer class="mt-6 bg-slate-900 border border-slate-800 rounded-xl p-6 text-xs space-y-4">
+            <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide flex items-center gap-2">
+                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                Engineered Pool Layout Structural Guidelines
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-400 leading-relaxed">
+                <ul class="space-y-2 list-disc pl-4">
+                    <li><strong class="text-slate-200">Staircase Optimization:</strong> Denoted steps are intentionally limited to a compact <code class="bg-slate-950 text-blue-400 px-1 rounded">16-inch wide alcove</code> in the corner. This prevents them from encroaching into the 8-foot wide swimming channel, giving her full clearance for arm strokes.</li>
+                    <li><strong class="text-slate-200">Turn Targets:</strong> Paint high-contrast vertical black strips exactly on the center points of the starting and turning walls underwater to practice split-second head alignments during fast turns.</li>
+                </ul>
+                <ul class="space-y-2 list-disc pl-4">
+                    <li><strong class="text-slate-200">Overflow Drainage Gutters:</strong> Implement high-capacity overflow grills along both longitudinal walls. This dampens backwash ripples and provides flat, calm water mimicry comparable to championship venues.</li>
+                    <li><strong class="text-slate-200">Volume Calculations Check:</strong> Confirmed absolute capacity fits standard chemical filtration plants optimized for roughly <code class="bg-slate-950 text-emerald-400 px-1 rounded">83,000+ Liters</code> water loop turn cycles.</li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Tab Switching Logic Script -->
+    <script>
+        function switchView(viewName) {
+            const topDownView = document.getElementById('view-top-down');
+            const crossSectionView = document.getElementById('view-cross-section');
+            const btnTopDown = document.getElementById('btn-top-down');
+            const btnCrossSection = document.getElementById('btn-cross-section');
+
+            if (viewName === 'top-down') {
+                topDownView.classList.remove('hidden');
+                topDownView.classList.add('block');
+                crossSectionView.classList.remove('block');
+                crossSectionView.classList.add('hidden');
+                
+                // Toggle Button active styles
+                btnTopDown.className = "flex-1 md:flex-none px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white shadow transition-all";
+                btnCrossSection.className = "flex-1 md:flex-none px-4 py-2 text-sm font-medium rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all";
+            } else if (viewName === 'cross-section') {
+                crossSectionView.classList.remove('hidden');
+                crossSectionView.classList.add('block');
+                topDownView.classList.remove('block');
+                topDownView.classList.add('hidden');
+
+                // Toggle Button active styles
+                btnCrossSection.className = "flex-1 md:flex-none px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white shadow transition-all";
+                btnTopDown.className = "flex-1 md:flex-none px-4 py-2 text-sm font-medium rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all";
+            }
+        }
+
+        function toggleSimulation() {
+            const swimmer = document.getElementById('swimmer-avatar');
+            const btn = document.getElementById('btn-sim');
+            
+            if (swimmer.classList.contains('hidden')) {
+                swimmer.classList.remove('hidden');
+                btn.textContent = "Stop Swimmer Simulation";
+                btn.className = "bg-red-600 text-white text-xs px-3 py-1.5 rounded font-bold shadow hover:bg-red-500 transition-all";
+            } else {
+                swimmer.classList.add('hidden');
+                btn.textContent = "Start Swimmer Simulation";
+                btn.className = "bg-emerald-600 text-white text-xs px-3 py-1.5 rounded font-bold shadow hover:bg-emerald-500 transition-all";
+            }
+        }
+    </script>
+</body>
+</html>
